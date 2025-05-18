@@ -1,6 +1,0 @@
-{
-  "imports": {
-    "testing/": "https://deno.land/std@0.177.0/testing/",
-    "@google/generative-ai": "npm:@google/generative-ai"
-  }
-} 

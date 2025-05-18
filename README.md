@@ -288,8 +288,8 @@ For production, you need to:
 - `npm run download-file -- --url <url> [options]`: Download files from URLs
 
 ### Deprecated/Removed Tools (Examples)
-- `npm run recraft` (Replaced by `gemini-image`)
-- `npm run flux` (Replaced by `gemini-image`)
+- `npm run recraft` (Replaced by `gemini-image-tool`)
+- `npm run flux` (Replaced by `gemini-image-tool`)
 - `npm run tavily-search` (Integrated into `gemini` tool with grounding)
 - `npm run generate-embeddings` (Potentially replaced by db functions or other tools)
 - `npm run send-email-sendgrid` (Handled by application logic)

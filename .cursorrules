@@ -582,7 +582,7 @@ Define high-level tasks. Follow the `## Request Processing Steps` below to execu
    - **Steps:**
      1. Read `docs/frontend.md` for UI/UX guidelines (`read_file`).
      2. Describe the design (components, layout, flow) and use `edit_file` to update `docs/frontend.md`.
-     3. Generate required images/illustrations using `run_terminal_cmd` with appropriate image generation tools (e.g., `gemini-image`, prefer `imagen` or `gemini` models). Specify output folder like `public/images`.
+     3. Generate required images/illustrations using `run_terminal_cmd` with appropriate image generation tools (e.g., `gemini-image-tool`, prefer `imagen` or `gemini` models). Specify output folder like `public/images`.
      4. Optimize generated images using `run_terminal_cmd` with `image-optimizer`.
      5. Briefly summarize the design and generated assets for the user.
   </design>
