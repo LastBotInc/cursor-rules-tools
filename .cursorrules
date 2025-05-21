@@ -1,6 +1,4 @@
-<project>
-This is a NextJS 15 / React 19 / Typescript / Tailwind CSS application with Jest and Cypress test frameworks.
-</project>
+
 
 <tools>
 # Internal Tools: Core capabilities available directly.
@@ -29,43 +27,6 @@ mcp_supabase_query
 # Project-Specific Tools: Execute these using `run_terminal_cmd`.
 {
   "tools": {
-    "translations": {
-      "description": "Tools for managing translations and localization",
-      "tool": "run_terminal_cmd",
-      "command": "npm run",
-      "options": {
-        "check-translations": "Compare English, Finnish and Swedish translation files for completeness and missing keys",
-        "import-translations:local": "Import translations for local development environment",
-        "import-translations:prod": "Import translations for production environment",
-        "split-locales": "Split monolithic locale files into separate namespace-based files for each locale (en, fi, sv)"
-      }
-    },
-    "seed": {
-      "description": "Tools for seeding development and production data",
-      "tool": "run_terminal_cmd",
-      "command": "npm run",
-      "options": {
-        "seed:users": "Seed users data for development environment",
-        "seed:users:local": "Seed users data for local development",
-        "seed:users:prod": "Seed users data for production environment",
-        "seed:blog:local": "Seed blog data for local development",
-        "seed:blog:prod": "Seed blog data for production environment"
-      }
-    },
-    "supabase": {
-      "description": "Manages Supabase database migrations, schema updates, and content seeding",
-      "tool": "run_terminal_cmd",
-      "command": "supabase",
-      "options": {
-        "migration": {
-          "new": "Create a new migration file"
-        },
-        "db": {
-          "push": "Push database migration changes",
-          "reset": "Reset the database"
-        },
-      },
-    },
     "image-optimizer": {
       "description": "Optimizes images with background removal, resizing, and format conversion using Sharp and Replicate's remove-bg model",
       "tool": "run_terminal_cmd",
@@ -123,7 +84,7 @@ mcp_supabase_query
       },
       "requires": [
         "GOOGLE_AI_STUDIO_KEY in .env",
-        "@google/genai package",
+        "google/genai package",
         "node-fetch package"
       ],
       "example": "npm run gemini -- --prompt "What is the capital of France?" --model gemini-2.0-flash-001 --temperature 0.7",
@@ -184,7 +145,7 @@ mcp_supabase_query
       },
       "requires": [
         "GOOGLE_AI_STUDIO_KEY or GEMINI_API_KEY in .env.local",
-        "@google/genai package",
+        "google/genai package",
         "commander package",
         "axios package",
         "dotenv package"
@@ -285,60 +246,6 @@ mcp_supabase_query
         "ora package",
         "chalk package"
       ]
-    },
-    "vercel-cli": {
-      "description": "Directly interact with Vercel deployment platform for project management, environment variables, and domains",
-      "tool": "run_terminal_cmd",
-      "command": "npm run vercel",
-      "options": {
-        "deploy": {
-          "description": "Deploy the application to Vercel",
-          "options": {
-            "environment": "(Optional) Deployment environment: production, preview, or development (default: preview)",
-            "project": "(Optional) Project name (defaults to directory name)",
-            "prod": "(Optional) Deploy to production (shorthand for --environment production)"
-          }
-        },
-        "list": {
-          "description": "List recent deployments",
-          "options": {
-            "count": "(Optional) Number of deployments to show (default: 5)"
-          }
-        },
-        "logs": {
-          "description": "Show logs for the current project",
-          "options": {
-            "follow": "(Optional) Follow logs in real time",
-            "deployment": "(Optional) Deployment ID"
-          }
-        },
-        "domains": {
-          "description": "Manage domains for your Vercel projects",
-          "options": {
-            "add": "(Optional) Add a domain",
-            "remove": "(Optional) Remove a domain",
-            "list": "(Optional) List all domains"
-          }
-        },
-        "env": {
-          "description": "Manage environment variables",
-          "options": {
-            "add": "(Optional) Add an environment variable (format: key=value)",
-            "remove": "(Optional) Remove an environment variable",
-            "list": "(Optional) List all environment variables",
-            "environment": "(Optional) Environment: development, preview, or production (default: development)"
-          }
-        },
-        "promote": {
-          "description": "Promote a deployment to production",
-          "arguments": "<url-or-id>: Deployment URL or ID to promote"
-        }
-      },
-      "requires": [
-        "Vercel CLI (will be auto-installed if not present)",
-        "Vercel account authentication"
-      ],
-      "example": "npm run vercel -- deploy --prod"
     },
     "github-cli": {
       "description": "Interact with GitHub repositories, pull requests, issues, and workflows directly from the command line",
@@ -473,29 +380,19 @@ mcp_supabase_query
 
 <documentation>
   ## Documentation and Context Files
-  Reference these files for understanding the project. Use `read_file` for `@*.md` files. Use `fetch_rules` for `@*.mdc` files.
-    - `@description.md`: App description, use cases, features.
-    - `@architecture.md`: Tech stack, folder structure, testing frameworks.
-    - `@datamodel.md`: Entities, attributes, relationships.
-    - `@frontend.md`: Views/screens, UI/UX patterns, styling.
-    - `@backend.md`: API endpoints, authentication, service architecture.
-    - `@todo.md`: Task list (✅ done, ⏳ in progress, ❌ not started). Update status, don't remove tasks.
-    - `@ai_changelog.md`: Log of changes made by AI. Add concise summaries here.
-    - `@learnings.md`: Technical learnings, best practices, error solutions. Add new findings here.
-    - `/.cursor/rules/@add-data-model.mdc`: How to add a new data model.
-    - `/.cursor/rules/@admin-api-protection.mdc`: How to protect the admin API.
-    - `/.cursor/rules/@implement-frontend-page.mdc`: How to implement a new frontend page.
-    - `/.cursor/rules/@implement-nextjs-api.mdc`: How to implement a new NextJS API route.
-    - `/.cursor/rules/@implement-unit-tests.mdc`: How to implement unit tests.
-    - `/.cursor/rules/@nextjs-json-translation-usage.mdc`: How to use JSON translations in Next.js.
-    - `/.cursor/rules/@supabase-auth-implementation.mdc`: How to implement Supabase authentication.
-    - `/.cursor/rules/@translation-guidelines.mdc`: Guidelines for translations.
-    - `/.cursor/rules/@translation-management-tools.mdc`: Tools for managing translations.
-    - `@package.json`: List of used npm packages and versions.
-    - `lib/@brand-info.ts`: Brand information for content generation.
+  Reference these files for understanding the project. Use `read_file` for `*.md` files. Use `fetch_rules` for `*.mdc` files.
+    - `description.md`: App description, use cases, features.
+    - `architecture.md`: Tech stack, folder structure, testing frameworks.
+    - `datamodel.md`: Entities, attributes, relationships.
+    - `frontend.md`: Views/screens, UI/UX patterns, styling.
+    - `backend.md`: API endpoints, authentication, service architecture.
+    - `todo.md`: Task list (✅ done, ⏳ in progress, ❌ not started). Update status, don't remove tasks.
+    - `ai_changelog.md`: Log of changes made by AI. Add concise summaries here.
+    - `learnings.md`: Technical learnings, best practices, error solutions. Add new findings here.
+    - `package.json`: List of used npm packages and versions.
 
   **Link Handling:**
-    - For `@filename.ext` links: Use `read_file` to access their content.
+    - For `filename.ext` links: Use `read_file` to access their content.
     - For `http://` or `https://` links: Use `web_search` to get information from the URL if needed for the task (e.g., documentation, error context). Do not assume you can directly access or parse the content without `web_search`.
 </documentation>
 
@@ -513,7 +410,7 @@ Define high-level tasks. Follow the `## Request Processing Steps` below to execu
   <document>
      - **Goal:** Update documentation files.
      - **Steps:**
-       1. Read relevant documentation files (`@*.md`).
+       1. Read relevant documentation files (`*.md`).
        2. Use `edit_file` to make necessary updates based on the task. Focus on the specific files mentioned in the `<documentation>` section (e.g., `ai_changelog.md`, `todo.md`, `learnings.md`).
   </document>
 
@@ -521,8 +418,8 @@ Define high-level tasks. Follow the `## Request Processing Steps` below to execu
   - **Goal:** Understand a task or topic thoroughly before planning.
   - **Steps:**
     1. **Gather Context:**
-        - Read relevant `@*.md` files from `<documentation>`.
-        - Fetch relevant `@*.mdc` rules using `fetch_rules`.
+        - Read relevant `*.md` files from `<documentation>`.
+        - Fetch relevant `*.mdc` rules using `fetch_rules`.
         - Use `codebase_search` to find relevant existing code snippets.
         - Use `web_search` for external information, documentation, or examples (perform at least one search).
     2. **Analyze & Plan:**
@@ -538,7 +435,7 @@ Define high-level tasks. Follow the `## Request Processing Steps` below to execu
     1. **Gather Context:**
         - Read `docs/learnings.md` for previous solutions (`read_file`).
         - If error messages contain URLs, use `web_search` to understand them.
-        - Fetch relevant `@*.mdc` rules (`fetch_rules`).
+        - Fetch relevant `*.mdc` rules (`fetch_rules`).
         - Use `web_search` for general error resolution information.
     2. **Iterative Fixing Loop:**
         a. **Hypothesize:** Based on context, identify 1-2 likely causes.
@@ -555,7 +452,7 @@ Define high-level tasks. Follow the `## Request Processing Steps` below to execu
   - **Steps:**
     1. **Understand Requirements:**
         - Read `docs/architecture.md` for testing practices (`read_file`).
-        - Fetch `@implement-unit-tests.mdc` rule (`fetch_rules`).
+        - Fetch `implement-unit-tests.mdc` rule (`fetch_rules`).
     2. **Write Unit Tests:**
         - Use `edit_file` to create/update unit test files (e.g., `__tests__/*.test.ts`).
     3. **Run & Fix Unit Tests:**
@@ -590,7 +487,7 @@ Define high-level tasks. Follow the `## Request Processing Steps` below to execu
   <develop>
    - **Goal:** Implement the code for a feature (frontend/backend).
    - **Steps:**
-     1. Fetch relevant rules (`@implement-*.mdc`) using `fetch_rules`.
+     1. Fetch relevant rules (`implement-*.mdc`) using `fetch_rules`.
      2. Use `edit_file` to implement the required code changes across necessary files (components, API routes, types, etc.). Ensure imports and dependencies are handled.
   </develop>
 
@@ -615,7 +512,7 @@ Define high-level tasks. Follow the `## Request Processing Steps` below to execu
     - **Steps:**
       1. **Review Examples:** Read `tools/gemini.ts` using `read_file` to understand existing patterns.
       2. **Implement:** Use `edit_file` to add the AI logic.
-      3. **Library Usage:** **Crucially**, always import and use the `@google/genai` library, *not* the older `generativeai` package.
+      3. **Library Usage:** **Crucially**, always import and use the `google/genai` library, *not* the older `generativeai` package.
       4. **Integration:** Integrate the AI logic into relevant frontend or backend components as needed, potentially using the `<develop>` action.
       5. **Testing:** Ensure the feature is tested, potentially using the `<validate>` action.
   </implement_ai>
@@ -653,20 +550,6 @@ Define high-level tasks. Follow the `## Request Processing Steps` below to execu
            - Follow American English conventions unless otherwise specified.
            - Avoid idioms that may not translate well.
 
-      4. **Implementation:**
-         - Identify the correct namespace file for each locale (`en/`, `fi/`, `sv/`).
-         - Use `edit_file` to add new translations or update existing ones.
-         - Maintain JSON structure and formatting consistency.
-         - Keep translations organized by logical sections within the namespace.
-      
-      5. **Validation:**
-         - Run `npm run check-translations` to verify translation completeness.
-         - If possible, have native speakers review translations (or note this as a post-implementation recommendation).
-         - Test in the UI to ensure proper rendering and context appropriateness.
-      
-      6. **Documentation:**
-         - Update the localization report if needed.
-         - Note any challenging translations or decisions in comments.
   </localize>
 </actions>
 
@@ -692,7 +575,7 @@ Define high-level tasks. Follow the `## Request Processing Steps` below to execu
     - **Follow Instructions Precisely:** Execute user instructions exactly as written.
     - **Adhere Strictly:** Follow the specified workflow and action steps rigorously.
     - **Maintain Structure:** Use consistent formatting as specified.
-    - **Leverage Context:** Actively incorporate context from documentation (`@*.md`), rules (`@*.mdc`), codebase searches (`codebase_search`), and files/URLs into prompts.
+    - **Leverage Context:** Actively incorporate context from documentation (`*.md`), rules (`*.mdc`), codebase searches (`codebase_search`), and files/URLs into prompts.
     - **Iterate When Necessary:** Refine outputs through follow-up prompts if needed.
 
 - **For GPT (OpenAI) and Grok (X.AI):**
@@ -719,8 +602,8 @@ Follow these steps sequentially for **every** user request and follow behavioral
         ```
 3.  **Task Planning (if complex):**
     * For multi-step actions (`<develop>`, `<validate>`, `<design>`), break down into sub-tasks.
-    * Use `edit_file` to add sub-tasks to `@todo.md` (marked ❌). Include development, testing, documentation steps.
-    * Inform the user the plan is in `@todo.md`.
+    * Use `edit_file` to add sub-tasks to `todo.md` (marked ❌). Include development, testing, documentation steps.
+    * Inform the user the plan is in `todo.md`.
 4.  **Action Execution:**
     * State: `Starting Action: <action name>...`
     * Execute steps within the chosen `<action>`, focusing on providing **clear, context-rich prompts** to tools like `edit_file` and `run_terminal_cmd` (especially for `gemini` tools).
@@ -730,5 +613,5 @@ Follow these steps sequentially for **every** user request and follow behavioral
 5.  **Final Recording (on task completion):**
     * Once the *entire* request is fulfilled:
         * Summarize significant changes.
-        * Execute `<record>` action (update `@ai_changelog.md`, `@todo.md`).
-        * Ensure `@learnings.md` was updated during `<fix>` or `<invent>` actions if applicable.
+        * Execute `<record>` action (update `ai_changelog.md`, `todo.md`).
+        * Ensure `learnings.md` was updated during `<fix>` or `<invent>` actions if applicable.
