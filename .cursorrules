@@ -21,7 +21,6 @@ mcp_puppeteer_puppeteer_evaluate
 
 <command_line_tools>
 # Project-Specific Tools: Execute these using `run_terminal_cmd`.
-# ✅ All tools have been tested and are working (except video generation which requires API keys)
 # 🔧 Setup: Run `npm install` and configure API keys in `.env.local` (see `.env.example`)
 {
   "tools": {
@@ -40,7 +39,6 @@ mcp_puppeteer_puppeteer_evaluate
       },
       "requires": [
         "REPLICATE_API_TOKEN in .env.local (for background removal)",
-        "sharp package (auto-installed with npm install)"
       ],
       "example": "npm run optimize-image -- -i input.png -o output.webp --resize 512x512 --format webp --quality 90",
       "note": "Use -i and -o flags for input/output. Background removal requires Replicate API token."
@@ -56,8 +54,6 @@ mcp_puppeteer_puppeteer_evaluate
         "selector": "(Optional) CSS selector to target specific content"
       },
       "requires": [
-        "turndown package (auto-installed with npm install)",
-        "axios package (auto-installed with npm install)"
       ],
       "example": "npm run html-to-md -- --url https://example.com --output docs/scraped.md --selector main"
     },
@@ -148,9 +144,6 @@ mcp_puppeteer_puppeteer_evaluate
       "requires": [
         "GOOGLE_AI_STUDIO_KEY or GEMINI_API_KEY in .env.local",
         "google/genai package (auto-installed with npm install)",
-        "commander package (auto-installed with npm install)",
-        "axios package (auto-installed with npm install)",
-        "dotenv package (auto-installed with npm install)"
       ]
     },
     "download-file": {
@@ -165,9 +158,6 @@ mcp_puppeteer_puppeteer_evaluate
         "filename": "(Optional) Output filename (if not provided, derived from URL or content)"
       },
       "requires": [
-        "axios package (auto-installed with npm install)",
-        "cli-progress package (auto-installed with npm install)",
-        "mime-types package (auto-installed with npm install)"
       ],
       "example": "npm run download-file -- --url https://example.com/image.jpg --folder public/images --filename downloaded-image.jpg"
     },
@@ -189,11 +179,7 @@ mcp_puppeteer_puppeteer_evaluate
       },
       "requires": [
         "REPLICATE_API_TOKEN in .env.local",
-        "OPENAI_API_KEY in .env.local (if using --image-prompt)",
-        "replicate package (auto-installed with npm install)",
-        "openai package (auto-installed with npm install)",
-        "ora package (auto-installed with npm install)",
-        "chalk package (auto-installed with npm install)"
+        "OPENAI_API_KEY in .env.local (if using --image-prompt)"
       ],
       "example": "npm run generate-video -- --image-prompt \"A futuristic robot playing chess\" --openai-image-output public/images/robot-chess.png --prompt \"Animate the robot making a move, cinematic style\" --image public/images/robot-chess.png --model kling-1.6 --duration 4 --output robot-chess-video.mp4"
     },
@@ -207,7 +193,7 @@ mcp_puppeteer_puppeteer_evaluate
         "output": "Path to output image",
         "tolerance": "(Optional) Color tolerance for background detection (0-255, default: 30)"
       },
-      "requires": ["sharp package (auto-installed with npm install)"],
+      "requires": [],
       "example": "npm run remove-background-advanced -- --input input.png --output output.png --tolerance 40"
     },
     "openai-image": {
@@ -246,11 +232,7 @@ mcp_puppeteer_puppeteer_evaluate
         }
       },
       "requires": [
-        "OPENAI_API_KEY in .env.local",
-        "openai package (auto-installed with npm install)",
-        "axios package (auto-installed with npm install)",
-        "ora package (auto-installed with npm install)",
-        "chalk package (auto-installed with npm install)"
+        "OPENAI_API_KEY in .env.local"
       ]
     },
     "github-cli": {
@@ -352,7 +334,7 @@ mcp_puppeteer_puppeteer_evaluate
           }
         },
         "workflow": {
-          "description": "Manage GitHub Actions workflows",
+          "description": "Manage GitHub workflows",
           "options": {
             "list": "(Optional) List workflows",
             "run": "(Optional) Run a workflow by name or ID",
@@ -410,10 +392,10 @@ mcp_puppeteer_puppeteer_evaluate
     - For `http://` or `https://` links: Use `web_search` to get information from the URL if needed for the task (e.g., documentation, error context). Do not assume you can directly access or parse the content without `web_search`.
 </documentation>
 
-## Core Actions & Workflow
+## Core Workflows
 Define high-level tasks. Follow the `## Request Processing Steps` below to execute these.
 
-<actions>
+<workflows>
   <use_tools>
     - **Goal:** Execute project-specific tools listed under `<command_line_tools>`.
     - **Steps:**
@@ -471,13 +453,13 @@ Define high-level tasks. Follow the `## Request Processing Steps` below to execu
         - Use `edit_file` to create/update unit test files (e.g., `__tests__/*.test.ts`).
     3. **Run & Fix Unit Tests:**
         - Execute tests using `run_terminal_cmd` (e.g., `npm test`).
-        - If errors occur, use the `<fix>` action flow to resolve them.
+        - If errors occur, use the `<fix>` workflow to resolve them.
     4. **Write E2E Tests:**
         - Use `edit_file` to create/update E2E test files (e.g., in `cypress/`).
     5. **Run & Fix E2E Tests:**
         - Execute tests using `run_terminal_cmd` (e.g., `npm run cypress:run`).
-        - If errors occur, use the `<fix>` action flow to resolve them.
-    6. **Document:** Ensure any non-trivial fixes are documented in `docs/learnings.md` as part of the `<fix>` action.
+        - If errors occur, use the `<fix>` workflow to resolve them.
+    6. **Document:** Ensure any non-trivial fixes are documented in `docs/learnings.md` as part of the `<fix>` workflow.
     7. **Repeat:** Continue until all relevant tests pass.
   </validate>
 
@@ -511,7 +493,7 @@ Define high-level tasks. Follow the `## Request Processing Steps` below to execu
       1. Implement the tool script (e.g., in `tools/` directory) using `edit_file`.
       2. Add/update the tool's definition in the `<command_line_tools>` section of *this* `.cursorrules` file using `edit_file`. Ensure `tool` is set to `run_terminal_cmd`.
       3. Test the new tool using `run_terminal_cmd`.
-      4. Use the `<fix>` action flow to debug any issues until the tool executes successfully.
+      4. Use the `<fix>` workflow to debug any issues until the tool executes successfully.
   </invent>
 
   <commit>
@@ -527,8 +509,8 @@ Define high-level tasks. Follow the `## Request Processing Steps` below to execu
       1. **Review Examples:** Read `tools/gemini.ts` using `read_file` to understand existing patterns.
       2. **Implement:** Use `edit_file` to add the AI logic.
       3. **Library Usage:** **Crucially**, always import and use the `google/genai` library, *not* the older `generativeai` package.
-      4. **Integration:** Integrate the AI logic into relevant frontend or backend components as needed, potentially using the `<develop>` action.
-      5. **Testing:** Ensure the feature is tested, potentially using the `<validate>` action.
+      4. **Integration:** Integrate the AI logic into relevant frontend or backend components as needed, potentially using the `<develop>` workflow.
+      5. **Testing:** Ensure the feature is tested, potentially using the `<validate>` workflow.
   </implement_ai>
 
   <localize>
@@ -565,18 +547,18 @@ Define high-level tasks. Follow the `## Request Processing Steps` below to execu
            - Avoid idioms that may not translate well.
 
   </localize>
-</actions>
+</workflows>
 
 <behavioral_rules>
 - **Existing Project:** NEVER create a new project. Analyze existing structure.
 - **Up-to-date Info:** Do NOT rely solely on internal knowledge. ALWAYS use `web_search` or `gemini --ground` to verify external API/library documentation, versions, and best practices.
 - **Latest Libraries:** Prefer latest stable versions for dependencies.
 - **Cautious Edits:** Use `codebase_search`/`grep_search` to understand impact before modifying existing code. Avoid deletions unless clearly required.
-- **Follow Instructions:** Adhere precisely to `<action>` steps and these rules.
+- **Follow Instructions:** Adhere precisely to `<workflow>` steps and these rules.
 - **Persistence:** Be persistent, do not give up. Don't stop when you have not completed the task. 
 - **Simplicity:** Prefer the simplest, most direct solution meeting all requirements.
 - **Tool Usage:** Use provided tools appropriately. Explain *why* a tool is used and *how* the prompt is constructed (especially for Gemini).
-- **Clarity:** Communicate plans, actions, results clearly. Ask clarifying questions if ambiguous.
+- **Clarity:** Communicate plans, workflows, results clearly. Ask clarifying questions if ambiguous.
 
 ### Model-Specific Behavior:
 - **For Claude (Anthropic):**
@@ -587,7 +569,7 @@ Define high-level tasks. Follow the `## Request Processing Steps` below to execu
 
 - **For Gemini (Google):**
     - **Follow Instructions Precisely:** Execute user instructions exactly as written.
-    - **Adhere Strictly:** Follow the specified workflow and action steps rigorously.
+    - **Adhere Strictly:** Follow the specified workflow and steps rigorously.
     - **Maintain Structure:** Use consistent formatting as specified.
     - **Leverage Context:** Actively incorporate context from documentation (`*.md`), rules (`*.mdc`), codebase searches (`codebase_search`), and files/URLs into prompts.
     - **Iterate When Necessary:** Refine outputs through follow-up prompts if needed.
@@ -600,32 +582,32 @@ Define high-level tasks. Follow the `## Request Processing Steps` below to execu
 ## Request Processing Steps
 Follow these steps sequentially for **every** user request and follow behavioral rules above:
 
-1.  **Tool Use Check:** If the user *explicitly* requests a specific tool, execute it using the `<use_tools>` action and respond. **Stop processing here.**
+1.  **Tool Use Check:** If the user *explicitly* requests a specific tool, execute it using the `<use_tools>` workflow and respond. **Stop processing here.**
 2.  **Initial Analysis:**
     * Read the user request carefully.
     * Consult `<documentation>` (`read_file`) and potentially fetch rules (`Workspace_rules`) for context.
     * Identify the primary goal.
-    * Determine the most relevant `<action>`. Default to `<research>` if unclear.
+    * Determine the most relevant `<workflow>`. Default to `<research>` if unclear.
     * List affected architecture areas.
     * **Present Analysis:**
         ```
         Request type: [Inferred type]
-        Primary Action: [<Chosen action>]
+        Primary Workflow: [<Chosen workflow>]
         Affected Areas: [List areas]
         Plan Overview: [Briefly mention key steps/tools, e.g., "Read docs, formulate prompt for edit_file, run tests"]
         ```
 3.  **Task Planning (if complex):**
-    * For multi-step actions (`<develop>`, `<validate>`, `<design>`), break down into sub-tasks.
+    * For multi-step workflow (`<develop>`, `<validate>`, `<design>`), break down into sub-tasks.
     * Use `edit_file` to add sub-tasks to `todo.md` (marked ❌). Include development, testing, documentation steps.
     * Inform the user the plan is in `todo.md`.
-4.  **Action Execution:**
-    * State: `Starting Action: <action name>...`
-    * Execute steps within the chosen `<action>`, focusing on providing **clear, context-rich prompts** to tools like `edit_file` and `run_terminal_cmd` (especially for `gemini` tools).
+4.  **Workflow Execution:**
+    * State: `Starting workflow: <workflow name>...`
+    * Execute steps within the chosen `<workflow>`, focusing on providing **clear, context-rich prompts** to tools like `edit_file` and `run_terminal_cmd` (especially for `gemini` tools).
     * Adhere strictly to `<behavior_rules>`.
     * Review outputs and iterate with follow-up prompts if necessary.
-    * State: `Completed Action: <action name>.`
+    * State: `Completed Wokflow: <workflow name>.`
 5.  **Final Recording (on task completion):**
     * Once the *entire* request is fulfilled:
         * Summarize significant changes.
-        * Execute `<record>` action (update `ai_changelog.md`, `todo.md`).
-        * Ensure `learnings.md` was updated during `<fix>` or `<invent>` actions if applicable.
+        * Execute `<record>` workflow (update `ai_changelog.md`, `todo.md`).
+        * Ensure `learnings.md` was updated during `<fix>` or `<invent>` workflows if applicable.
