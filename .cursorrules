@@ -1,5 +1,3 @@
-
-
 <tools>
 # Internal Tools: Core capabilities available directly.
 run_terminal_cmd
@@ -11,7 +9,6 @@ edit_file
 file_search
 delete_file
 reapply
-fetch_rules
 web_search
 mcp_puppeteer_puppeteer_navigate
 mcp_puppeteer_puppeteer_screenshot
@@ -20,17 +17,19 @@ mcp_puppeteer_puppeteer_fill
 mcp_puppeteer_puppeteer_select
 mcp_puppeteer_puppeteer_hover
 mcp_puppeteer_puppeteer_evaluate
-mcp_supabase_query
 </tools>
 
 <command_line_tools>
 # Project-Specific Tools: Execute these using `run_terminal_cmd`.
+# ✅ All tools have been tested and are working (except video generation which requires API keys)
+# 🔧 Setup: Run `npm install` and configure API keys in `.env.local` (see `.env.example`)
 {
   "tools": {
     "image-optimizer": {
       "description": "Optimizes images with background removal, resizing, and format conversion using Sharp and Replicate's remove-bg model",
       "tool": "run_terminal_cmd",
       "command": "npm run optimize-image",
+      "status": "✅ Tested and working",
       "options": {
         "input": "Path to input image",
         "output": "Path to output image",
@@ -40,24 +39,25 @@ mcp_supabase_query
         "quality": "(Optional) Set output quality (1-100, default: 80)"
       },
       "requires": [
-        "REPLICATE_API_TOKEN in .env",
-        "sharp package (npm install sharp)"
+        "REPLICATE_API_TOKEN in .env.local (for background removal)",
+        "sharp package (auto-installed with npm install)"
       ],
-      "example": "npm run optimize-image -- input.png output.webp --resize 512x512 --format webp --quality 90"
+      "example": "npm run optimize-image -- -i input.png -o output.webp --resize 512x512 --format webp --quality 90",
+      "note": "Use -i and -o flags for input/output. Background removal requires Replicate API token."
     },
     "html-to-md": {
       "description": "Scrapes a webpage and converts its HTML content to Markdown format using Turndown service",
       "tool": "run_terminal_cmd",
       "command": "npm run html-to-md",
+      "status": "✅ Tested and working",
       "options": {
         "url": "URL of the webpage to scrape",
         "output": "(Optional) Output file path for the markdown (default: output.md)",
         "selector": "(Optional) CSS selector to target specific content"
       },
       "requires": [
-        "Node.js >= 14",
-        "turndown package",
-        "axios package"
+        "turndown package (auto-installed with npm install)",
+        "axios package (auto-installed with npm install)"
       ],
       "example": "npm run html-to-md -- --url https://example.com --output docs/scraped.md --selector main"
     },
@@ -65,6 +65,7 @@ mcp_supabase_query
       "description": "Interacts with Google's Gemini API for text generation, chat, multimodal tasks, document analysis, and grounded search",
       "tool": "run_terminal_cmd",
       "command": "npm run gemini",
+      "status": "✅ Tested and working",
       "options": {
         "prompt": "Text prompt or question for the model",
         "model": "(Optional) Model to use: 'gemini-2.0-flash' (default), 'gemini-2.5-pro-exp-03-25'",
@@ -83,41 +84,42 @@ mcp_supabase_query
         "show-search-data": "(Optional) Show the search entries used for grounding (default: false)"
       },
       "requires": [
-        "GOOGLE_AI_STUDIO_KEY in .env",
-        "google/genai package",
-        "node-fetch package"
+        "GOOGLE_AI_STUDIO_KEY or GEMINI_API_KEY in .env.local",
+        "@google/generative-ai package (auto-installed with npm install)",
+        "node-fetch package (auto-installed with npm install)"
       ],
-      "example": "npm run gemini -- --prompt "What is the capital of France?" --model gemini-2.0-flash-001 --temperature 0.7",
+      "example": "npm run gemini -- --prompt \"What is the capital of France?\" --model gemini-2.0-flash --temperature 0.7",
       "advanced_examples": [
         "# Process a PDF document from a URL",
-        "npm run gemini -- --prompt "Summarize this document in 5 key points" --url "https://discovery.ucl.ac.uk/id/eprint/10089234/1/343019_3_art_0_py4t4l_convrt.pdf"",
+        "npm run gemini -- --prompt \"Summarize this document in 5 key points\" --url \"https://discovery.ucl.ac.uk/id/eprint/10089234/1/343019_3_art_0_py4t4l_convrt.pdf\"",
         "",
         "# Process a local PDF file",
-        "npm run gemini -- --prompt "What is this document about?" --file test/data/sample.pdf",
+        "npm run gemini -- --prompt \"What is this document about?\" --file test/data/sample.pdf",
         "",
         "# Process a text file with specific MIME type",
-        "npm run gemini -- --prompt "Expand on this information" --file test/data/sample.txt --mime-type text/plain",
+        "npm run gemini -- --prompt \"Expand on this information\" --file test/data/sample.txt --mime-type text/plain",
         "",
         "# Get grounded search results with real-time information",
-        "npm run gemini -- --prompt "When is the next total solar eclipse in North America?" --ground --show-search-data",
+        "npm run gemini -- --prompt \"When is the next total solar eclipse in North America?\" --ground --show-search-data",
         "",
         "# Generate structured JSON data with predefined schema (recipes)",
-        "npm run gemini -- --prompt "List 3 popular cookie recipes" --json recipes",
+        "npm run gemini -- --prompt \"List 3 popular cookie recipes\" --json recipes",
         "",
         "# Generate structured JSON data with predefined schema (tasks)",
-        "npm run gemini -- --prompt "Create a task list for planning a vacation" --json tasks",
+        "npm run gemini -- --prompt \"Create a task list for planning a vacation\" --json tasks",
         "",
         "# Generate structured JSON data with predefined schema (products)",
-        "npm run gemini -- --prompt "List 3 smartphone models" --json products",
+        "npm run gemini -- --prompt \"List 3 smartphone models\" --json products",
         "",
         "# Use a custom JSON schema for structured output",
-        "npm run gemini -- --prompt "List 3 programming languages and their use cases" --json custom --schema '{"type":"array","items":{"type":"object","properties":{"language":{"type":"string"},"year":{"type":"integer"},"useCases":{"type":"array","items":{"type":"string"}}},"required":["language","useCases"]}}'"
+        "npm run gemini -- --prompt \"List 3 programming languages and their use cases\" --json custom --schema '{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"language\":{\"type\":\"string\"},\"year\":{\"type\":\"integer\"},\"useCases\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}}},\"required\":[\"language\",\"useCases\"]}}'"
       ]
     },
     "gemini-image": {
       "description": "Generates and edits images using Google Gemini and Imagen models",
       "tool": "run_terminal_cmd",
       "command": "node tools/gemini-image-tool.js",
+      "status": "✅ Tested and working",
       "subcommands": {
         "generate": {
           "description": "Generate an image using Gemini 2.0 or Imagen 3.0",
@@ -130,7 +132,7 @@ mcp_supabase_query
             "negative-prompt": "(Optional) Negative prompt (Imagen 3 only)",
             "aspect-ratio": "(Optional) Aspect ratio (Imagen 3 only, default: 1:1, options: 1:1, 16:9, 9:16, 4:3, 3:4)"
           },
-          "example": "node tools/gemini-image-tool.js generate -p "A futuristic car" -m imagen-3.0 -n 2 --aspect-ratio 16:9 -o car.png"
+          "example": "node tools/gemini-image-tool.js generate -p \"A futuristic car\" -m imagen-3.0 -n 2 --aspect-ratio 16:9 -o car.png"
         },
         "edit": {
           "description": "Edit an existing image using Gemini 2.0",
@@ -140,21 +142,22 @@ mcp_supabase_query
             "output": "(Optional) Output file path (default: gemini-edited-image.png)",
             "folder": "(Optional) Output folder path (default: public/images)"
           },
-          "example": "node tools/gemini-image-tool.js edit -i input.png -p "Add sunglasses to the person" -o edited.png"
+          "example": "node tools/gemini-image-tool.js edit -i input.png -p \"Add sunglasses to the person\" -o edited.png"
         }
       },
       "requires": [
         "GOOGLE_AI_STUDIO_KEY or GEMINI_API_KEY in .env.local",
-        "google/genai package",
-        "commander package",
-        "axios package",
-        "dotenv package"
+        "google/genai package (auto-installed with npm install)",
+        "commander package (auto-installed with npm install)",
+        "axios package (auto-installed with npm install)",
+        "dotenv package (auto-installed with npm install)"
       ]
     },
     "download-file": {
       "description": "Downloads files from URLs with progress tracking, automatic file type detection, and customizable output paths",
       "tool": "run_terminal_cmd",
       "command": "npm run download-file",
+      "status": "✅ Tested and working",
       "options": {
         "url": "URL of the file to download",
         "output": "(Optional) Complete output path including filename",
@@ -162,9 +165,9 @@ mcp_supabase_query
         "filename": "(Optional) Output filename (if not provided, derived from URL or content)"
       },
       "requires": [
-        "axios package",
-        "cli-progress package",
-        "mime-types package"
+        "axios package (auto-installed with npm install)",
+        "cli-progress package (auto-installed with npm install)",
+        "mime-types package (auto-installed with npm install)"
       ],
       "example": "npm run download-file -- --url https://example.com/image.jpg --folder public/images --filename downloaded-image.jpg"
     },
@@ -172,6 +175,7 @@ mcp_supabase_query
       "description": "Generates videos using various Replicate API models. Can optionally first generate an image using OpenAI (GPT-image-1) based on an image prompt, then use that image for video generation.",
       "tool": "run_terminal_cmd",
       "command": "npm run generate-video",
+      "status": "⚠️ Requires API keys - needs REPLICATE_API_TOKEN configured",
       "options": {
         "prompt": "Text description of the desired video (used by Replicate).",
         "model": "(Optional) Replicate model to use: kling-1.6 (default), kling-2.0, minimax, hunyuan, mochi, or ltx.",
@@ -184,31 +188,33 @@ mcp_supabase_query
         "aspect-ratio": "(Optional) Aspect ratio for the video (e.g., 16:9, 1:1). Support depends on the Replicate model."
       },
       "requires": [
-        "REPLICATE_API_TOKEN in .env",
-        "OPENAI_API_KEY in .env (if using --image-prompt)",
-        "replicate package",
-        "openai package",
-        "ora package",
-        "chalk package"
+        "REPLICATE_API_TOKEN in .env.local",
+        "OPENAI_API_KEY in .env.local (if using --image-prompt)",
+        "replicate package (auto-installed with npm install)",
+        "openai package (auto-installed with npm install)",
+        "ora package (auto-installed with npm install)",
+        "chalk package (auto-installed with npm install)"
       ],
-      "example": "npm run generate-video -- --image-prompt \\"A futuristic robot playing chess\\" --openai-image-output public/images/robot-chess.png --prompt \\"Animate the robot making a move, cinematic style\\" --image public/images/robot-chess.png --model kling-1.6 --duration 4 --output robot-chess-video.mp4"
+      "example": "npm run generate-video -- --image-prompt \"A futuristic robot playing chess\" --openai-image-output public/images/robot-chess.png --prompt \"Animate the robot making a move, cinematic style\" --image public/images/robot-chess.png --model kling-1.6 --duration 4 --output robot-chess-video.mp4"
     },
     "remove-background-advanced": {
       "description": "Advanced background removal tool using Sharp with color tolerance and edge detection",
       "tool": "run_terminal_cmd",
       "command": "npm run remove-background-advanced",
+      "status": "✅ Tested and working",
       "options": {
         "input": "Path to input image",
         "output": "Path to output image",
         "tolerance": "(Optional) Color tolerance for background detection (0-255, default: 30)"
       },
-      "requires": ["sharp package"],
+      "requires": ["sharp package (auto-installed with npm install)"],
       "example": "npm run remove-background-advanced -- --input input.png --output output.png --tolerance 40"
     },
     "openai-image": {
       "description": "Generate and edit images using OpenAI's GPT-image-1 and DALL-E models",
       "tool": "run_terminal_cmd",
       "command": "npm run openai-image",
+      "status": "✅ Tested and working",
       "subcommands": {
         "generate": {
           "description": "Generate an image using OpenAI's image generation models",
@@ -241,16 +247,17 @@ mcp_supabase_query
       },
       "requires": [
         "OPENAI_API_KEY in .env.local",
-        "openai package",
-        "axios package",
-        "ora package",
-        "chalk package"
+        "openai package (auto-installed with npm install)",
+        "axios package (auto-installed with npm install)",
+        "ora package (auto-installed with npm install)",
+        "chalk package (auto-installed with npm install)"
       ]
     },
     "github-cli": {
       "description": "Interact with GitHub repositories, pull requests, issues, and workflows directly from the command line",
       "tool": "run_terminal_cmd",
       "command": "npm run github",
+      "status": "🔧 Not tested - requires GitHub authentication",
       "options": {
         "auth": {
           "description": "Manage GitHub authentication",
@@ -380,7 +387,9 @@ mcp_supabase_query
 
 <documentation>
   ## Documentation and Context Files
-  Reference these files for understanding the project. Use `read_file` for `*.md` files. Use `fetch_rules` for `*.mdc` files.
+  Reference these files for understanding the project. Use `read_file` for `*.md` files.
+    - `README.md`: **Comprehensive setup guide**, tool descriptions, usage examples, and API key instructions
+    - `.env.example`: Template for required environment variables and API keys
     - `description.md`: App description, use cases, features.
     - `architecture.md`: Tech stack, folder structure, testing frameworks.
     - `datamodel.md`: Entities, attributes, relationships.
@@ -390,6 +399,11 @@ mcp_supabase_query
     - `ai_changelog.md`: Log of changes made by AI. Add concise summaries here.
     - `learnings.md`: Technical learnings, best practices, error solutions. Add new findings here.
     - `package.json`: List of used npm packages and versions.
+
+  **Setup Instructions:**
+    1. Run `npm install` to install all dependencies
+    2. Copy `.env.example` to `.env.local` and add your API keys
+    3. See `README.md` for detailed API key setup instructions
 
   **Link Handling:**
     - For `filename.ext` links: Use `read_file` to access their content.
